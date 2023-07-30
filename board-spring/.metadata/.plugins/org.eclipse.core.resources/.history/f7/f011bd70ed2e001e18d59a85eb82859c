@@ -1,0 +1,5 @@
+package com.sbyoon.board.repository;
+
+public interface UserRepository {
+
+}
