@@ -1,4 +1,4 @@
-
+# 커밋 테스트
 server.port=4000
 
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
