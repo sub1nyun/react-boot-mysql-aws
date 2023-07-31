@@ -3,6 +3,9 @@ package com.sbyoon.board.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.sbyoon.board.dto.SignUpDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +27,12 @@ public class UserEntity {
 	private String userAddress;
 	private String userProfile;
 
+	public UserEntity(SignUpDto dto) {
+		this.userEmail = dto.getUserEmail();
+		this.userPassword = dto.getUserPassword();
+		this.userNickname = dto.getUserNickname();
+		this.userPhoneNumber = dto.getUserPhoneNumber();
+		this.userAddress = dto.getUserAddress() + " " + dto.getUserAddressDetail();
+	}
+	
 }

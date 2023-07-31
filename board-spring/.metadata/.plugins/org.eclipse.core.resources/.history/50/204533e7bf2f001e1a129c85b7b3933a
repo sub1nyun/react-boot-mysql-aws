@@ -1,0 +1,5 @@
+package com.sbyoon.board.service;
+
+public class AuthService {
+
+}

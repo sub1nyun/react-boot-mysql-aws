@@ -1,24 +1,26 @@
 package com.sbyoon.board.contoroller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.sbyoon.board.dto.ResponseDto;
 import com.sbyoon.board.dto.SignUpDto;
-import com.sbyoon.board.dto.SignUpResponseDto;
+import com.sbyoon.board.service.AuthService;
 
-@CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+	
+	@Autowired
+	private AuthService authService;
 
 	@PostMapping("/signUp")
-	public ResponseDto<SignUpResponseDto> signUp(@RequestBody SignUpDto requestBody) {
-		System.out.println(requestBody.toString());
-		return null;
+	public ResponseDto<?> signUp(@RequestBody SignUpDto requestBody) {
+		ResponseDto<?> result = authService.signUp(requestBody);
+		return result;
 	}
 	
 	
