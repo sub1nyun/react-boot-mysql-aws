@@ -1,0 +1,38 @@
+package com.sbyoon.board.security;
+
+import java.util.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+@Service
+public class TokenProvider {
+	
+	private static final String SECURITY_KEY = "jwtseckey!@";
+	
+	public String create(String userEmail) {
+		// 현재시간의 + 1시간
+		Date exprTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+		
+		
+		// builder는 가변 객체 create 불변 객체 반환 생성 기능은 동일하나 create 방식을 권장
+		return Jwts.builder()
+				.signWith(SignatureAlgorithm.HS512, SECURITY_KEY)
+				.setSubject(userEmail).setIssuedAt(new Date()).setExpiration(exprTime)
+				.compact();
+	}
+	
+	// 복호화 하는 메서드
+	public String validate(String token) {
+		Claims claims = Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody();
+		
+		return claims.getSubject();
+		
+	}
+
+}

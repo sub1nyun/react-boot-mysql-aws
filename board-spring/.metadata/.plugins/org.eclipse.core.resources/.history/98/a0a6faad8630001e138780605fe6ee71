@@ -1,0 +1,19 @@
+package com.sbyoon.board.security;
+
+import java.util.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class TokenProvider {
+	
+	private static final String SECURITY_KEY = "jwtseckey!@";
+	
+	public String create(String userEmail) {
+		// 현재시간의 + 1시간
+		Date exprTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+	}
+
+}

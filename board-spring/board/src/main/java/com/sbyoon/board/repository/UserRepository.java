@@ -7,5 +7,7 @@ import com.sbyoon.board.entity.UserEntity;
 // 첫번째 제네릭 - Entity 
 // 두번째 제네릭 id - pk 타입을 명시
 public interface UserRepository extends JpaRepository<UserEntity, String>{
+	
+	public boolean existsByUserEmailAndUserPassword(String userEmail, String userPassword);
 
 }
