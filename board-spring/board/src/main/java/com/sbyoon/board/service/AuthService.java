@@ -53,7 +53,9 @@ public class AuthService {
 	// @NotBlank -> null과 "", " " 모두 허용하지 않음
 	public ResponseDto<SignInResponseDto> signIn(SignInDto dto) {
 		String userEmail = dto.getUserEmail();
+		System.out.println(userEmail);
 		String userPassword = dto.getUserPassword();
+		System.out.println(userPassword);
 		try {
 			boolean existed = userRepository.existsByUserEmailAndUserPassword(userEmail, userPassword);
 			if(!existed) return ResponseDto.setFailed("Sign In Information Does Not Match!");

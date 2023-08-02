@@ -30,7 +30,6 @@ public class TokenProvider {
 				// 생성
 				.compact();
 	}
-	
 	// JWT 검증 -> 복호화 하는 메서드
 	public String validate(String token) {
 		// 매개변수로 전달 받은 token을 키를 사용해서 복호화(디코딩)
