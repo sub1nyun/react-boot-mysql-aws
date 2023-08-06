@@ -1,0 +1,17 @@
+package com.sbyoon.board.contoroller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/api/board")
+public class BoardController {
+	
+	@GetMapping("/")
+	public String getBoard() {
+		System.out.println("이게 왜 안 됨");
+		return "getBoard";
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.sbyoon.board.config;
+
+public class WebSecurityConfig {
+
+}
