@@ -1,5 +1,0 @@
-package com.sbyoon.board.dto;
-
-public class ResponseDto {
-
-}

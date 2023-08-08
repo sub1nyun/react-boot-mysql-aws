@@ -1,6 +1,8 @@
 package com.sbyoon.board.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.sbyoon.board.dto.ResponseDto;
 import com.sbyoon.board.dto.SignInDto;
@@ -17,6 +19,8 @@ public class AuthService {
 	private UserRepository userRepository;
 	@Autowired
 	private TokenProvider tokenProvider;
+	
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	public ResponseDto<?> signUp(SignUpDto dto) {
 		String userEmail = dto.getUserEmail();
@@ -37,6 +41,10 @@ public class AuthService {
 		
 		// UserEntity 생성
 		UserEntity userEntity = new UserEntity(dto);
+		// 비밀번호 암호화
+		String encodedPassword = passwordEncoder.encode(userPassword);
+		userEntity.setUserPassword(encodedPassword);
+		
 		// userRepository를 통해 데이터베이스에 Entity 저장
 		
 		try {
@@ -53,23 +61,17 @@ public class AuthService {
 	// @NotBlank -> null과 "", " " 모두 허용하지 않음
 	public ResponseDto<SignInResponseDto> signIn(SignInDto dto) {
 		String userEmail = dto.getUserEmail();
-		System.out.println(userEmail);
 		String userPassword = dto.getUserPassword();
-		System.out.println(userPassword);
-		try {
-			boolean existed = userRepository.existsByUserEmailAndUserPassword(userEmail, userPassword);
-			if(!existed) return ResponseDto.setFailed("Sign In Information Does Not Match!");
-		}catch (Exception e) {
-			return ResponseDto.setFailed("DataBase Error!");
-		}
 		
 		UserEntity userEntity = null;
 		
 		try {
-			userEntity = userRepository.findById(userEmail).orElseThrow(() -> {
-				return new IllegalArgumentException("그런 사용자 없어요");
-			});
-			
+			userEntity = userRepository.findByUserEmail(userEmail);
+			// 잘못된 이메일의 경우
+			if(userEmail == null) return ResponseDto.setFailed("Sign In Failed");
+			// 패스워드가 일치하지 않는 경우
+			if(!passwordEncoder.matches(userPassword, userEntity.getUserPassword()))
+				return ResponseDto.setFailed("Sign In Failed");
 		}catch (Exception e) {
 			return ResponseDto.setFailed("Database Error");
 		}
