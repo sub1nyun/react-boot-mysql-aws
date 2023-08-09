@@ -1,5 +1,0 @@
-package com.sbyoon.board.security;
-
-public class TokenProvider {
-
-}
