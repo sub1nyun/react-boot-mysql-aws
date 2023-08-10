@@ -34,6 +34,6 @@ public class BoardEntity {
 	private String boardWriterNickname;
 	private String boardWriteDate;
 	private int boardClickCount;
-	private int boardLikeCount;
+	private int boardLikesCount;
 	private int boardCommentCount;
 }
